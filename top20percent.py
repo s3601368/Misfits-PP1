@@ -15,6 +15,7 @@ for i in df['id_assessment'].unique().tolist():
     print(new_df)
 
 
+
 student_info = fn.csv_preview('studentInfo.csv')
 print(student_info)
 top_student_list = df['id_student'].unique().tolist()
@@ -22,5 +23,6 @@ print("total students" + str(len(top_student_list)))
 student_info = student_info[~student_info['id_student'].isin(df['id_student'])]
 print(student_info)
 
-
+df.to_csv(r'20thpercentile.csv')
+student_info.to_csv(r'demographics20thpercentile.csv')
 
