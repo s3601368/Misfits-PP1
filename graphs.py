@@ -4,6 +4,8 @@ import matplotlib.pyplot as plt
 
 pd.set_option('display.max_columns', 500)
 pd.set_option('display.width', 1000)
+chosen_percentile = 0.8
+
 
 assessments = fn.csv_preview('assessments.csv')
 student_assessments = fn.csv_preview('studentAssessment.csv')
@@ -18,6 +20,12 @@ student_scores = student_assessments[student_assessments['id_assessment'].isin(e
 print(student_scores)
 
 demographics = demographics[demographics['id_student'].isin(student_scores['id_student'])]
+
+percentile = student_scores['score'].quantile(chosen_percentile)
+
+# remove this line for ALL scores, keep this line for top 20% of results
+student_scores = student_scores[student_scores.score > percentile]
+
 
 merged_dataframe = pd.merge(student_scores, demographics.rename(columns={'id_student': 'id_student'}),
                             on='id_student', how='left')
