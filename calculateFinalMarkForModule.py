@@ -1,5 +1,6 @@
 import functions as fn
 import pandas as pd
+import numpy
 
 student_results = fn.csv_preview('studentAssessment.csv', 10)
 assessments = fn.csv_preview('assessments.csv', 10)
@@ -10,7 +11,7 @@ for i in assessments.groupby(['code_module', 'code_presentation']).id_assessment
     course = i[0]
     course_assessments = i[1]
     print(course)
-    print(course_assessments)
+    # print(course_assessments)
     student_result_for_module = student_results[student_results['id_assessment'].isin(course_assessments)]
     for j in student_result_for_module.groupby(['id_student']):
         student_id = j[0]
@@ -24,6 +25,8 @@ for i in assessments.groupby(['code_module', 'code_presentation']).id_assessment
             # print(index, row)
             assessment_id = row['id_assessment']
             student_score = row['score']
+            if numpy.isnan(student_score):
+                student_score = 0.00
             weighting = assessments_search.loc[assessment_id, 'weight']
             if weighting == 100:
                 exam_flag = True
@@ -34,7 +37,9 @@ for i in assessments.groupby(['code_module', 'code_presentation']).id_assessment
         if exam_flag:
             final_mark = final_mark/2
             exam_flag = False
-
+        # if numpy.isnan(final_mark):
+        #     print(type(final_mark))
+        #     print(student_grades)
         # print(final_mark)
         student_total_grade_list.append([course[0], course[1], student_id, final_mark])
 
