@@ -13,8 +13,8 @@ for i in final_grade_module.groupby(['code_module', 'code_presentation']):
     # for i in result_df['total_mark'].unique():
     #     print(type(i))
     #
-    plt.hist(result_df['total_mark'], bins = 100)
-    # # sns.distplot(final_grade_module['total_mark'], bins = 100)
+    # plt.hist(result_df['total_mark'], bins = 100)
+    sns.distplot(result_df['total_mark'], bins = 100)
     #
     plt.title(str(course_ID))
     plt.xlabel("result")
