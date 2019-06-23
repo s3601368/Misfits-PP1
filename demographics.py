@@ -13,11 +13,11 @@ final_grade_module = final_grade_module.drop(0)
 demographics_result = pd.merge(final_grade_module, demographics, on=['id_student', 'code_module', 'code_presentation'])
 
 print(demographics_result.head(20))
-fn.sort_by_demographics(demographics_result, 'age_band')
-# for demographics_results in demographics_result.groupby(['code_module', 'code_presentation']):
-#
-#     sns.distplot(demographics_results[1].total_mark, bins = 100)
-#     sns.distplot(demographics_results[1][demographics_results[1].gender == "F"].total_mark, bins = 100)
-#     sns.distplot(demographics_results[1][demographics_results[1].gender == "M"].total_mark, bins = 100)
-#
-#     plt.show()
+studentVle = fn.csv_preview('studentVle.csv', 10)
+total_clicks = fn.findTotalCount(studentVle)
+master_df = pd.merge(demographics_result, total_clicks, on=['id_student', 'code_module', 'code_presentation'])
+
+# fn.sort_by_clicks(demographics_result, studentVle)
+demographic = ['gender', 'region', 'highest_education', 'imd_band', 'age_band', 'num_of_prev_attempts', 'studied_credits', 'disability', 'final_result']
+# fn.plot_demographic_amounts(master_df, demographic)
+fn.sort_by_demographics(master_df, 'gender')
